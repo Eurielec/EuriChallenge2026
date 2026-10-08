@@ -268,17 +268,162 @@ st.markdown("""
         margin: 0;
     }
 
-    .schema-diagram {
-        background: #09090d;
-        border: 1px solid rgba(239, 68, 68, 0.25);
-        border-radius: 14px;
-        padding: 14px 18px;
+    /* Esquema visual del sistema de archivos */
+    .tree-schema {
+        background: #0b0b0f;
+        border: 1px solid rgba(239, 68, 68, 0.28);
+        border-radius: 20px;
+        padding: 20px 22px;
+        margin: 12px 0 16px 0;
+    }
+
+    .tree-root {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .tree-root-tag {
+        background: #dc2626;
+        color: #ffffff;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        border-radius: 9999px;
+        padding: 3px 11px;
+    }
+
+    .tree-root-title {
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .tree-branch {
+        border-left: 2px solid rgba(239, 68, 68, 0.35);
+        margin-left: 14px;
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .tree-folder-card {
+        background: #121217;
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        border-radius: 16px;
+        padding: 14px 16px;
+    }
+
+    .tree-folder-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+    }
+
+    .folder-pill {
+        background: rgba(239, 68, 68, 0.14);
+        border: 1px solid rgba(239, 68, 68, 0.38);
+        color: #fca5a5;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 9999px;
+        padding: 3px 10px;
+    }
+
+    .folder-title {
+        font-family: ui-monospace, monospace !important;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .folder-desc {
+        font-size: 0.78rem;
+        color: #71717a;
+    }
+
+    .tree-subbranch {
+        border-left: 1px dashed rgba(239, 68, 68, 0.35);
+        margin-left: 8px;
+        padding-left: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .file-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #17171d;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 9px 14px;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .file-card:hover {
+        border-color: rgba(239, 68, 68, 0.45);
+        background: #1c1c24;
+    }
+
+    .file-card-edit {
+        border-color: rgba(239, 68, 68, 0.28);
+        background: #14141b;
+    }
+
+    .file-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tag-edit {
+        background: rgba(220, 38, 38, 0.18);
+        border: 1px solid rgba(239, 68, 68, 0.45);
+        color: #f87171;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: 9999px;
+        padding: 2px 8px;
+    }
+
+    .tag-system {
+        background: #232328;
+        border: 1px solid #3f3f46;
+        color: #a1a1aa;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: 9999px;
+        padding: 2px 8px;
+    }
+
+    .file-name {
+        font-family: ui-monospace, monospace !important;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .file-desc {
         font-size: 0.8rem;
-        color: #e4e4e7;
-        line-height: 1.55;
-        overflow-x: auto;
-        margin: 8px 0 16px 0;
+        color: #a1a1aa;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -386,15 +531,58 @@ if st.session_state.mostrar_tutorial:
 <p class="tutorial-bubble-desc">El modulo actual provee la infraestructura base y captura en tiempo real.<br>La especificacion clinica y los ejercicios biomedicos se añadiran en la siguiente etapa.</p>
 </div>
 </div>
-<div style="font-size: 0.78rem; font-weight: 700; color: #ef4444; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px;">Esquema del Sistema de Archivos</div>
-<div class="schema-diagram">
-<pre style="margin:0; font-family:inherit; color:inherit; background:transparent; border:none; padding:0; line-height:1.55; white-space:pre;">EURICHALLENGE/
-├── app/
-│   ├── app.py          &lt;- Interfaz grafica, dashboard y flujo de video WebRTC
-│   └── utils.py        &lt;- Modulo de calculo cinematico, angulos y estilos
-├── Dockerfile          &lt;- Definicion de entorno y librerias del sistema
-├── docker-compose.yml  &lt;- Mapeo de puerto 8501 y montaje en vivo ./app:/app
-└── requirements.txt    &lt;- Dependencias oficiales del proyecto</pre>
+<div style="font-size: 0.78rem; font-weight: 700; color: #ef4444; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;">Esquema Visual del Sistema de Archivos</div>
+<div class="tree-schema">
+<div class="tree-root">
+<span class="tree-root-tag">RAIZ DEL PROYECTO</span>
+<span class="tree-root-title">EURICHALLENGE/</span>
+</div>
+<div class="tree-branch">
+<div class="tree-folder-card">
+<div class="tree-folder-head">
+<span class="folder-pill">DIRECTORIO</span>
+<span class="folder-title">app/</span>
+<span class="folder-desc">Carpeta principal de trabajo (montada en caliente con Docker)</span>
+</div>
+<div class="tree-subbranch">
+<div class="file-card file-card-edit">
+<div class="file-left">
+<span class="tag-edit">EDITAR AQUI</span>
+<span class="file-name">app.py</span>
+</div>
+<div class="file-desc">Frontend: Interfaz grafica, dashboard de control y captura WebRTC</div>
+</div>
+<div class="file-card file-card-edit">
+<div class="file-left">
+<span class="tag-edit">EDITAR AQUI</span>
+<span class="file-name">utils.py</span>
+</div>
+<div class="file-desc">Logica clinica: Calculo de angulos articulares, filtros y trazado</div>
+</div>
+</div>
+</div>
+<div class="file-card">
+<div class="file-left">
+<span class="tag-system">DOCKER</span>
+<span class="file-name">docker-compose.yml</span>
+</div>
+<div class="file-desc">Mapeo del puerto 8501 y sincronizacion del volumen ./app:/app</div>
+</div>
+<div class="file-card">
+<div class="file-left">
+<span class="tag-system">CONFIG</span>
+<span class="file-name">Dockerfile</span>
+</div>
+<div class="file-desc">Entorno base Python 3.11-slim y dependencias del sistema</div>
+</div>
+<div class="file-card">
+<div class="file-left">
+<span class="tag-system">PAQUETES</span>
+<span class="file-name">requirements.txt</span>
+</div>
+<div class="file-desc">Librerias oficiales: mediapipe, opencv, streamlit, numpy</div>
+</div>
+</div>
 </div>
 </div>"""
     st.markdown(html_tutorial, unsafe_allow_html=True)
