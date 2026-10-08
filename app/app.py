@@ -199,6 +199,34 @@ st.markdown("""
         letter-spacing: -0.02em;
     }
 
+    .flow-line {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #0c0c10;
+        border: 1px solid rgba(239, 68, 68, 0.22);
+        border-radius: 9999px;
+        padding: 8px 18px;
+        font-size: 0.8rem;
+        color: #d4d4d8;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+    }
+
+    .flow-pill {
+        background: #1b1b22;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 9999px;
+        padding: 4px 12px;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .flow-arrow {
+        color: #ef4444;
+        font-weight: 700;
+    }
+
     .tutorial-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -208,9 +236,13 @@ st.markdown("""
 
     .tutorial-bubble {
         background: #16161c;
-        border: 1px solid rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(239, 68, 68, 0.2);
         border-radius: 18px;
         padding: 16px 18px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .tutorial-bubble:hover {
+        border-color: rgba(239, 68, 68, 0.45);
     }
 
     .tutorial-bubble-tag {
@@ -238,7 +270,7 @@ st.markdown("""
 
     .schema-diagram {
         background: #09090d;
-        border: 1px solid rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.25);
         border-radius: 14px;
         padding: 14px 18px;
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
@@ -246,35 +278,7 @@ st.markdown("""
         color: #e4e4e7;
         line-height: 1.55;
         overflow-x: auto;
-        margin: 12px 0 16px 0;
-    }
-
-    .flow-line {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: #0c0c10;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
-        padding: 10px 16px;
-        font-size: 0.8rem;
-        color: #d4d4d8;
-        margin-bottom: 16px;
-        flex-wrap: wrap;
-    }
-
-    .flow-pill {
-        background: #1b1b22;
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        border-radius: 9999px;
-        padding: 4px 12px;
-        font-weight: 600;
-        color: #ffffff;
-    }
-
-    .flow-arrow {
-        color: #ef4444;
-        font-weight: 700;
+        margin: 8px 0 16px 0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -317,36 +321,30 @@ with st.sidebar:
             st.session_state.mostrar_tutorial = True
             st.rerun()
 
-    st.markdown("""
-    <div class="bubble-card">
-        <div class="sidebar-item-label">Paciente</div>
-        <div class="sidebar-item-val">Demo</div>
-        <div class="sidebar-item-label">ID de Sesion</div>
-        <div class="sidebar-item-val">REHAB-2026-01</div>
-        <div class="sidebar-item-label">Estado</div>
-        <div class="sidebar-item-val" style="color: #4ade80;">Conectado</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="bubble-card">
+<div class="sidebar-item-label">Paciente</div>
+<div class="sidebar-item-val">Demo</div>
+<div class="sidebar-item-label">ID de Sesion</div>
+<div class="sidebar-item-val">REHAB-2026-01</div>
+<div class="sidebar-item-label">Estado</div>
+<div class="sidebar-item-val" style="color: #4ade80;">Conectado</div>
+</div>""", unsafe_allow_html=True)
 
-    st.markdown("""
-    <div class="bubble-card">
-        <div class="sidebar-item-label">Ejercicio Seleccionado</div>
-        <div class="sidebar-item-val">Elevacion de brazo</div>
-        <div class="sidebar-item-label">Articulaciones Objetivo</div>
-        <div class="sidebar-item-val">Hombro / Codo</div>
-        <div class="sidebar-item-label">Meta</div>
-        <div class="sidebar-item-val">10 repeticiones</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="bubble-card">
+<div class="sidebar-item-label">Ejercicio Seleccionado</div>
+<div class="sidebar-item-val">Elevacion de brazo</div>
+<div class="sidebar-item-label">Articulaciones Objetivo</div>
+<div class="sidebar-item-val">Hombro / Codo</div>
+<div class="sidebar-item-label">Meta</div>
+<div class="sidebar-item-val">10 repeticiones</div>
+</div>""", unsafe_allow_html=True)
 
-    st.markdown("""
-    <div class="bubble-card">
-        <div class="sidebar-item-label">Modo de Video</div>
-        <div class="sidebar-item-val">WebRTC SENDRECV</div>
-        <div class="sidebar-item-label">Trazado</div>
-        <div class="sidebar-item-val">MediaPipe Pose (33 pts)</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="bubble-card">
+<div class="sidebar-item-label">Modo de Video</div>
+<div class="sidebar-item-val">WebRTC SENDRECV</div>
+<div class="sidebar-item-label">Trazado</div>
+<div class="sidebar-item-val">MediaPipe Pose (33 pts)</div>
+</div>""", unsafe_allow_html=True)
 
 # Area principal
 st.markdown('<div class="pill-badge"><span class="pill-indicator"></span> SISTEMA DE MONITORIZACION BIOMEDICA</div>', unsafe_allow_html=True)
@@ -355,67 +353,51 @@ st.markdown('<p class="app-subtitle">Reto de Ingenieria Biomedica | EESTEC LC Ma
 
 # Tutorial minimalista (se muestra unicamente en la primera ejecucion o al solicitarlo)
 if st.session_state.mostrar_tutorial:
-    st.markdown("""
-    <div class="tutorial-container">
-        <div class="tutorial-top">
-            <div>
-                <span class="pill-badge" style="margin-bottom: 4px;">GUIA DE ARQUITECTURA</span>
-                <div class="tutorial-header-title">Estructura de Trabajo y Desarrollo</div>
-            </div>
-        </div>
-        
-        <div class="flow-line">
-            <span class="flow-pill">Editor Local (IDE)</span>
-            <span class="flow-arrow">&rarr;</span>
-            <span class="flow-pill">Volumen en Vivo (./app)</span>
-            <span class="flow-arrow">&rarr;</span>
-            <span class="flow-pill">Contenedor Docker (Streamlit :8501)</span>
-            <span class="flow-arrow">&rarr;</span>
-            <span class="flow-pill">Navegador WebRTC</span>
-        </div>
-
-        <div class="tutorial-grid">
-            <div class="tutorial-bubble">
-                <div class="tutorial-bubble-tag">01. Entorno de Edicion</div>
-                <div class="tutorial-bubble-title">Donde Desarrollar</div>
-                <p class="tutorial-bubble-desc">
-                    Desarrolla en tu editor preferido (VS Code, Cursor, etc.) sobre los archivos locales.
-                    El volumen montado replica cambios instantaneamente en el contenedor sin reiniciar Docker.
-                </p>
-            </div>
-            <div class="tutorial-bubble">
-                <div class="tutorial-bubble-tag">02. Stack Tecnologico</div>
-                <div class="tutorial-bubble-title">Lenguajes y Librerias</div>
-                <p class="tutorial-bubble-desc">
-                    <strong>Python 3.11</strong> como lenguaje principal.<br>
-                    Modulos core: <code>mediapipe</code> (pose 33 landmarks), <code>opencv-python</code> (matrices de imagen),
-                    <code>numpy</code> (calculo articular) y <code>streamlit</code>.
-                </p>
-            </div>
-            <div class="tutorial-bubble">
-                <div class="tutorial-bubble-tag">03. Estado del Desafio</div>
-                <div class="tutorial-bubble-title">Funcionamiento del Reto</div>
-                <p class="tutorial-bubble-desc">
-                    El modulo actual provee la infraestructura base y captura en tiempo real.<br>
-                    La especificacion clinica y los ejercicios biomédicos se añadiran en la siguiente etapa.
-                </p>
-            </div>
-        </div>
-
-        <div style="font-size: 0.78rem; font-weight: 700; color: #ef4444; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px;">
-            Esquema del Sistema de Archivos
-        </div>
-        <div class="schema-diagram">
-EURICHALLENGE/
+    html_tutorial = """<div class="tutorial-container">
+<div class="tutorial-top">
+<div>
+<span class="pill-badge" style="margin-bottom: 4px;">GUIA DE ARQUITECTURA</span>
+<div class="tutorial-header-title">Estructura de Trabajo y Desarrollo</div>
+</div>
+</div>
+<div class="flow-line">
+<span class="flow-pill">Editor Local (IDE)</span>
+<span class="flow-arrow">&rarr;</span>
+<span class="flow-pill">Volumen en Vivo (./app)</span>
+<span class="flow-arrow">&rarr;</span>
+<span class="flow-pill">Contenedor Docker (Streamlit :8501)</span>
+<span class="flow-arrow">&rarr;</span>
+<span class="flow-pill">Navegador WebRTC</span>
+</div>
+<div class="tutorial-grid">
+<div class="tutorial-bubble">
+<div class="tutorial-bubble-tag">01. Entorno de Edicion</div>
+<div class="tutorial-bubble-title">Donde Desarrollar</div>
+<p class="tutorial-bubble-desc">Desarrolla en tu editor preferido (VS Code, Cursor, etc.) sobre los archivos locales. El volumen montado replica cambios instantaneamente en el contenedor sin reiniciar Docker.</p>
+</div>
+<div class="tutorial-bubble">
+<div class="tutorial-bubble-tag">02. Stack Tecnologico</div>
+<div class="tutorial-bubble-title">Lenguajes y Librerias</div>
+<p class="tutorial-bubble-desc"><strong>Python 3.11</strong> como lenguaje principal.<br>Modulos core: <code>mediapipe</code> (pose 33 landmarks), <code>opencv-python</code> (matrices de imagen), <code>numpy</code> (calculo articular) y <code>streamlit</code>.</p>
+</div>
+<div class="tutorial-bubble">
+<div class="tutorial-bubble-tag">03. Estado del Desafio</div>
+<div class="tutorial-bubble-title">Funcionamiento del Reto</div>
+<p class="tutorial-bubble-desc">El modulo actual provee la infraestructura base y captura en tiempo real.<br>La especificacion clinica y los ejercicios biomedicos se añadiran en la siguiente etapa.</p>
+</div>
+</div>
+<div style="font-size: 0.78rem; font-weight: 700; color: #ef4444; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px;">Esquema del Sistema de Archivos</div>
+<div class="schema-diagram">
+<pre style="margin:0; font-family:inherit; color:inherit; background:transparent; border:none; padding:0; line-height:1.55; white-space:pre;">EURICHALLENGE/
 ├── app/
-│   ├── app.py          <- Interfaz grafica, dashboard y flujo de video WebRTC
-│   └── utils.py        <- Modulo de calculo cinematico, angulos y estilos
-├── Dockerfile          <- Definicion de entorno y librerias del sistema
-├── docker-compose.yml  <- Mapeo de puerto 8501 y montaje en vivo ./app:/app
-└── requirements.txt    <- Dependencias oficiales del proyecto
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+│   ├── app.py          &lt;- Interfaz grafica, dashboard y flujo de video WebRTC
+│   └── utils.py        &lt;- Modulo de calculo cinematico, angulos y estilos
+├── Dockerfile          &lt;- Definicion de entorno y librerias del sistema
+├── docker-compose.yml  &lt;- Mapeo de puerto 8501 y montaje en vivo ./app:/app
+└── requirements.txt    &lt;- Dependencias oficiales del proyecto</pre>
+</div>
+</div>"""
+    st.markdown(html_tutorial, unsafe_allow_html=True)
     
     col_btn, col_rest = st.columns([1, 4])
     with col_btn:
@@ -424,12 +406,10 @@ EURICHALLENGE/
             st.rerun()
 
 # Banner de instrucciones estilo burbuja
-st.markdown("""
-<div class="bubble-notice">
-    <span class="pill-indicator"></span>
-    <span>Pulsa <strong>START</strong> y permite el acceso a la camara en el navegador para iniciar la monitorizacion en tiempo real.</span>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("""<div class="bubble-notice">
+<span class="pill-indicator"></span>
+<span>Pulsa <strong>START</strong> y permite el acceso a la camara en el navegador para iniciar la monitorizacion en tiempo real.</span>
+</div>""", unsafe_allow_html=True)
 
 # Modulo de video WebRTC
 webrtc_streamer(
