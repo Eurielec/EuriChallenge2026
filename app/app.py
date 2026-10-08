@@ -1,51 +1,253 @@
+import os
+import sys
 import streamlit as st
 import cv2
 import mediapipe as mp
 import av
 from streamlit_webrtc import webrtc_streamer, WebRtcMode
 
-# Configuración de la página web
-st.set_page_config(page_title="EURI-CHALLENGE Rehab", layout="wide")
+# Anadir el directorio actual al path para importar utilidades
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from utils import obtener_estilos_dibujo
 
-st.title("🦾 Monitor de Rehabilitación")
-st.markdown("Hackathon EESTEC LC Madrid - **Reto de Ingeniería Biomédica**")
+# Configuracion de pagina
+st.set_page_config(
+    page_title="EuriChallenge - Monitor de Rehabilitacion",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# Inicializar la Inteligencia Artificial
+# Inyeccion de estilos CSS: Estetica Roja y Negra, Helvetica, Lineas Finas y Estilo Burbuja
+st.markdown("""
+<style>
+    /* Tipografia global Helvetica */
+    * {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    }
+
+    /* Fondo principal y estructura */
+    .stApp {
+        background-color: #09090b !important;
+        color: #f4f4f5 !important;
+    }
+
+    /* Ocultar elementos genericos de cabecera de Streamlit */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    header { background-color: transparent !important; }
+
+    /* Barra lateral */
+    section[data-testid="stSidebar"] {
+        background-color: #0d0d11 !important;
+        border-right: 1px solid rgba(239, 68, 68, 0.18) !important;
+    }
+    section[data-testid="stSidebar"] > div {
+        padding-top: 1.5rem;
+    }
+
+    /* Contenedores estilo burbuja */
+    .bubble-card {
+        background: #141418;
+        border: 1px solid rgba(239, 68, 68, 0.22);
+        border-radius: 20px;
+        padding: 18px 22px;
+        margin-bottom: 16px;
+        box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.6);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .bubble-card:hover {
+        border-color: rgba(239, 68, 68, 0.45);
+        box-shadow: 0 10px 28px -4px rgba(220, 38, 38, 0.18);
+    }
+
+    /* Tarjetas de metrica / pildoras */
+    .pill-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(220, 38, 38, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        border-radius: 9999px;
+        padding: 5px 14px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #fca5a5;
+        margin-bottom: 12px;
+    }
+
+    .pill-indicator {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: #ef4444;
+        box-shadow: 0 0 8px #ef4444;
+        display: inline-block;
+    }
+
+    /* Titulos y textos */
+    h1.app-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+        margin: 0 0 4px 0;
+        padding: 0;
+    }
+    p.app-subtitle {
+        font-size: 0.95rem;
+        color: #a1a1aa;
+        margin: 0 0 24px 0;
+        letter-spacing: -0.01em;
+    }
+
+    .sidebar-section-title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #ef4444;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .sidebar-item-label {
+        font-size: 0.78rem;
+        color: #71717a;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 2px;
+    }
+    .sidebar-item-val {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #f4f4f5;
+        margin-bottom: 12px;
+    }
+
+    /* Banner informativo estilo burbuja */
+    .bubble-notice {
+        background: rgba(220, 38, 38, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 9999px;
+        padding: 10px 20px;
+        font-size: 0.88rem;
+        color: #f4f4f5;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* Marco de la camara en estilo burbuja */
+    div[data-testid="stWebRtcStreamer"] {
+        background: #000000;
+        border: 1px solid rgba(239, 68, 68, 0.28);
+        border-radius: 24px;
+        padding: 12px;
+        box-shadow: 0 14px 35px -8px rgba(0, 0, 0, 0.85);
+    }
+
+    /* Estilos para botones de Streamlit y WebRTC (estilo pildora / burbuja) */
+    button, div.stButton > button {
+        border-radius: 9999px !important;
+        border: 1px solid rgba(239, 68, 68, 0.38) !important;
+        background: #18181d !important;
+        color: #f4f4f5 !important;
+        font-weight: 600 !important;
+        font-size: 0.88rem !important;
+        padding: 0.5rem 1.6rem !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    button:hover, div.stButton > button:hover {
+        background: #dc2626 !important;
+        border-color: #ef4444 !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 16px rgba(220, 38, 38, 0.45) !important;
+        transform: translateY(-1px);
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Inicializacion del detector de pose MediaPipe
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
-# Esta función se ejecuta por cada fotograma (foto) que envía la cámara web
-def procesar_frame(frame):
-    # Extraer la foto de la cámara web
-    img = frame.to_ndarray(format="bgr24")
+# Obtener configuracion de dibujo en paleta roja y blanca
+spec_puntos, spec_conexiones = obtener_estilos_dibujo()
 
-    # Convertir color y pasar a MediaPipe
+def procesar_frame(frame):
+    """
+    Procesa cada fotograma recibido por la camara web,
+    aplica la estimacion de pose y superpone el trazado.
+    """
+    img = frame.to_ndarray(format="bgr24")
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = pose.process(img_rgb)
 
-    # Si ve a una persona, dibujar el esqueleto
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(
             img,
             results.pose_landmarks,
             mp_pose.POSE_CONNECTIONS,
-            mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
-            mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2)
+            spec_puntos,
+            spec_conexiones
         )
 
-    # Devolver la foto pintada a la página web
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-# Panel lateral para que los estudiantes metan sus datos
+# Barra lateral: Panel de control con estructura de burbujas
 with st.sidebar:
-    st.header("Panel de Control")
-    st.write("Paciente: **Demo**")
-    st.write("Ejercicio: **Elevación de brazo**")
+    st.markdown('<div class="sidebar-section-title">Panel de Control</div>', unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="bubble-card">
+        <div class="sidebar-item-label">Paciente</div>
+        <div class="sidebar-item-val">Demo</div>
+        <div class="sidebar-item-label">ID de Sesion</div>
+        <div class="sidebar-item-val">REHAB-2026-01</div>
+        <div class="sidebar-item-label">Estado</div>
+        <div class="sidebar-item-val" style="color: #4ade80;">Conectado</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# El reproductor de vídeo en la web
-st.write("### Cámara en Vivo")
-st.info("💡 Haz clic en 'START' y concédele permisos a tu navegador para usar la cámara.")
+    st.markdown("""
+    <div class="bubble-card">
+        <div class="sidebar-item-label">Ejercicio Seleccionado</div>
+        <div class="sidebar-item-val">Elevacion de brazo</div>
+        <div class="sidebar-item-label">Articulaciones Objetivo</div>
+        <div class="sidebar-item-val">Hombro / Codo</div>
+        <div class="sidebar-item-label">Meta</div>
+        <div class="sidebar-item-val">10 repeticiones</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="bubble-card">
+        <div class="sidebar-item-label">Modo de Video</div>
+        <div class="sidebar-item-val">WebRTC SENDRECV</div>
+        <div class="sidebar-item-label">Trazado</div>
+        <div class="sidebar-item-val">MediaPipe Pose (33 pts)</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Area principal
+st.markdown('<div class="pill-badge"><span class="pill-indicator"></span> SISTEMA DE MONITORIZACION BIOMEDICA</div>', unsafe_allow_html=True)
+st.markdown('<h1 class="app-title">Monitor de Rehabilitacion</h1>', unsafe_allow_html=True)
+st.markdown('<p class="app-subtitle">Reto de Ingenieria Biomedica | EESTEC LC Madrid & Eurielec</p>', unsafe_allow_html=True)
+
+# Banner de instrucciones estilo burbuja
+st.markdown("""
+<div class="bubble-notice">
+    <span class="pill-indicator"></span>
+    <span>Pulsa <strong>START</strong> y permite el acceso a la camara en el navegador para iniciar la monitorizacion en tiempo real.</span>
+</div>
+""", unsafe_allow_html=True)
+
+# Modulo de video WebRTC
 webrtc_streamer(
     key="rehab-cam",
     mode=WebRtcMode.SENDRECV,

@@ -1,54 +1,45 @@
-import streamlit as st
 import cv2
 import mediapipe as mp
-import av
-from streamlit_webrtc import webrtc_streamer, WebRtcMode
+import numpy as np
 
-# Configuración de la página web
-st.set_page_config(page_title="EURI-CHALLENGE Rehab", layout="wide")
+def obtener_estilos_dibujo():
+    """
+    Retorna la configuracion visual del esqueleto para MediaPipe.
+    Paleta roja y blanca de alto contraste sobre fondo de camara.
+    """
+    mp_drawing = mp.solutions.drawing_utils
+    
+    # Puntos articulares (blanco frio de alta visibilidad)
+    spec_puntos = mp_drawing.DrawingSpec(
+        color=(245, 245, 250),
+        thickness=-1,
+        circle_radius=3
+    )
+    
+    # Lineas de conexion osea (rojo carmesi en formato BGR)
+    spec_conexiones = mp_drawing.DrawingSpec(
+        color=(25, 25, 220),
+        thickness=2,
+        circle_radius=1
+    )
+    
+    return spec_puntos, spec_conexiones
 
-st.title("🦾 Monitor de Rehabilitación")
-st.markdown("Hackathon EESTEC LC Madrid - **Reto de Ingeniería Biomédica**")
 
-# Inicializar la Inteligencia Artificial
-mp_pose = mp.solutions.pose
-mp_drawing = mp.solutions.drawing_utils
-pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+def calcular_angulo(a, b, c):
+    """
+    Calcula el angulo articular formado por tres puntos (A -> B -> C)
+    donde B es el vertice articular (por ejemplo hombro o codo).
+    Retorna el angulo en grados [0 - 180].
+    """
+    a = np.array(a)
+    b = np.array(b)
+    c = np.array(c)
 
-# Esta función se ejecuta por cada fotograma (foto) que envía la cámara web
-def procesar_frame(frame):
-    # Extraer la foto de la cámara web
-    img = frame.to_ndarray(format="bgr24")
+    radianes = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(a[1] - b[1], a[0] - b[0])
+    angulo = np.abs(radianes * 180.0 / np.pi)
 
-    # Convertir color y pasar a MediaPipe
-    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = pose.process(img_rgb)
+    if angulo > 180.0:
+        angulo = 360.0 - angulo
 
-    # Si ve a una persona, dibujar el esqueleto
-    if results.pose_landmarks:
-        mp_drawing.draw_landmarks(
-            img,
-            results.pose_landmarks,
-            mp_pose.POSE_CONNECTIONS,
-            mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
-            mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2)
-        )
-
-    # Devolver la foto pintada a la página web
-    return av.VideoFrame.from_ndarray(img, format="bgr24")
-
-# Panel lateral para que los estudiantes metan sus datos
-with st.sidebar:
-    st.header("Panel de Control")
-    st.write("Paciente: **Demo**")
-    st.write("Ejercicio: **Elevación de brazo**")
-
-# El reproductor de vídeo en la web
-st.write("### Cámara en Vivo")
-st.info("💡 Haz clic en 'START' y concédele permisos a tu navegador para usar la cámara.")
-webrtc_streamer(
-    key="rehab-cam",
-    mode=WebRtcMode.SENDRECV,
-    video_frame_callback=procesar_frame,
-    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
-)
+    return float(angulo)
