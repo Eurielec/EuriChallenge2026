@@ -1,8 +1,8 @@
 [theme]
 base = "dark"
-primaryColor = "#dc2626"
-backgroundColor = "#09090b"
-secondaryBackgroundColor = "#121216"
+primaryColor = "#ff2314"
+backgroundColor = "#0a0a0a"
+secondaryBackgroundColor = "#141414"
 textColor = "#f4f4f5"
 font = "sans serif"
 
@@ -13,3 +13,6 @@ enableXsrfProtection = false
 
 [browser]
 gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"

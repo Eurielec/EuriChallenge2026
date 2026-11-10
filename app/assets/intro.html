@@ -1,0 +1,356 @@
+<section class="eur-hero" id="eur-hero">
+  <div class="hero-bar">
+    <img src="__EURIELEC__" alt="Eurielec">
+    <img src="__ELGATO__" alt="Elgato">
+  </div>
+  <h1 class="hero-word" aria-label="Tutorial">
+    <span class="w w-far" aria-hidden="true">Tutorial</span>
+    <span class="w w-near" aria-hidden="true">Tutorial</span>
+    <span class="w w-top" aria-hidden="true">Tutorial</span>
+  </h1>
+  <div class="hero-foot">
+    <button class="act act-solid" data-act="tutorial">Ver tutorial</button>
+    <button class="act act-line" data-act="tool">Ir a la herramienta</button>
+  </div>
+  <button class="cue-btn" data-act="tutorial" aria-label="Bajar al tutorial">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M12 4v15M5 12l7 7 7-7"/></svg>
+  </button>
+</section>
+
+<section class="eur-sec sec-a" id="sec-a">
+  <p class="label rv-i">Guía de arquitectura</p>
+  <h2 class="head rv-i t2">Estructura<br>de trabajo</h2>
+  <ol class="flow">
+    <li class="rv-i t2">IDE local</li>
+    <li class="rv-i t3">./app (volumen)</li>
+    <li class="rv-i t4">Docker :8501</li>
+    <li class="rv-i t5">WebRTC Stream</li>
+  </ol>
+</section>
+
+<section class="eur-sec sec-b" id="sec-b">
+  <div class="sec-b-grid">
+    <!-- Columna izquierda: Enlaces de descarga -->
+    <div class="ide-downloads rv-i t2">
+      <h4 class="downloads-title">Enlaces de descarga</h4>
+      <div class="ide-list">
+        <a class="ide-item" href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" aria-label="Visual Studio Code">
+          <span class="ide-icon">
+            <svg viewBox="0 0 100 100" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M70.9119 99.3171C72.4869 99.9307 74.2828 99.8914 75.8725 99.1264L96.4608 89.2197C98.6242 88.1787 100 85.9892 100 83.5872V16.4133C100 14.0113 98.6243 11.8218 96.4609 10.7808L75.8725 0.873756C73.7862 -0.130129 71.3446 0.11576 69.5135 1.44695C69.252 1.63711 69.0028 1.84943 68.769 2.08341L29.3551 38.0415L12.1872 25.0096C10.589 23.7965 8.35363 23.8959 6.86933 25.2461L1.36303 30.2549C-0.452552 31.9064 -0.454633 34.7627 1.35853 36.417L16.2471 50.0001L1.35853 63.5832C-0.454633 65.2374 -0.452552 68.0938 1.36303 69.7453L6.86933 74.7541C8.35363 76.1043 10.589 76.2037 12.1872 74.9905L29.3551 61.9587L68.769 97.9167C69.3925 98.5406 70.1246 99.0104 70.9119 99.3171ZM75.0152 27.2989L45.1091 50.0001L75.0152 72.7012V27.2989Z"/>
+            </svg>
+          </span>
+          <span class="ide-name">Visual Studio Code</span>
+          <span class="ide-arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        </a>
+
+        <a class="ide-item" href="https://www.jetbrains.com/pycharm/download/" target="_blank" rel="noopener noreferrer" aria-label="PyCharm">
+          <span class="ide-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7.833 6.666v-.055c0-1-.667-1.5-1.778-1.5H4.389v3.055h1.723c1.111 0 1.721-.666 1.721-1.5zM0 0v24h24V0H0zm2.223 3.167h4c2.389 0 3.833 1.389 3.833 3.445v.055c0 2.278-1.778 3.5-4.001 3.5H4.389v2.945H2.223V3.167zm12.388 9.5a3.81 3.81 0 0 1-1.722-.389l.5-1.611c.5.278 1.056.444 1.611.444 1.167 0 1.778-.667 1.778-1.722v-.056c0-.944-.611-1.611-1.778-1.611-.556 0-1.111.167-1.611.444l-.5-1.611c.667-.278 1.222-.389 1.722-.389 2.222 0 3.889 1.333 3.889 3.389v.056c0 2.111-1.667 3.444-3.889 3.444zm-2.5 4.389h8.333v1.778H12.11v-1.778z"/>
+            </svg>
+          </span>
+          <span class="ide-name">PyCharm</span>
+          <span class="ide-arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        </a>
+
+        <a class="ide-item" href="https://www.spyder-ide.org/" target="_blank" rel="noopener noreferrer" aria-label="Spyder">
+          <span class="ide-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.053.237a4.05 4.05 0 0 0-1.89.467A4.1 4.1 0 0 0 .524 2.29a7 7 0 0 0-.2.4c-.036.094-.076.186-.107.275a3.6 3.6 0 0 0-.147.567 4 4 0 0 0-.07.76v15.42a4 4 0 0 0 .4 1.756 4.05 4.05 0 0 0 3.654 2.295h8.234a.22.22 0 0 0 .22-.22v-.983a.22.22 0 0 0-.22-.219h-1.07l-3.188-6.46 7.276-9.642a.8.8 0 0 0 .137-.284l6.668 1.02v1.506a.22.22 0 0 0 .218.217h.99a.22.22 0 0 0 .218-.217v-4.19a4.04 4.04 0 0 0-1.506-3.146A4.04 4.04 0 0 0 19.48.237Zm0 1.42h2.97l.213 1.717-3.938-.601-1.242-.193a2.62 2.62 0 0 1 1.997-.923m9.586 0 .345 2.748-5.39-.821-.244-1.915zm1.318 0h4.304a2.855 2.855 0 0 1 2.848 2.848v1.142L15.326 4.61ZM2.13 3.92l4.924.756-2.749 3.653Zm6.394.98 5.508.843-6.65 8.824-2.43-4.927 3.57-4.733Zm-7.1.555 1.76 3.57-1.762.215Zm17.964 4.608c-2.625 0-4.98.368-4.98 3.069v.514c0 1.35.465 2.772 2.355 3.508l3.484 1.333c1.129.464 1.423.93 1.423 1.641v.295c0 1.055-.614 1.276-2.576 1.276h-4.539a.324.324 0 0 0-.368.368v1.08c0 .195.073.343.368.366.417.05 2.354.222 4.489.222 3.314 0 4.956-.536 4.956-3.284v-.273c0-1.35-.196-2.601-2.453-3.46l-3.263-1.3c-1.202-.442-1.52-1.033-1.52-1.717v-.32c0-.883.661-1.274 1.79-1.274h4.563a.326.326 0 0 0 .369-.369v-1.055a.363.363 0 0 0-.344-.393 31 31 0 0 0-3.754-.227m-15.592.203 2.464 4.98-4.838.608v-5.289Zm3.07 6.227 2.888 5.85H4.272a2.857 2.857 0 0 1-2.85-2.85v-2.316z"/>
+            </svg>
+          </span>
+          <span class="ide-name">Spyder</span>
+          <span class="ide-arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        </a>
+
+        <a class="ide-item" href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer" aria-label="Colab">
+          <span class="ide-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16.9414 4.9757a7.033 7.033 0 0 0-4.9308 2.0646 7.033 7.033 0 0 0-.1232 9.8068l2.395-2.395a3.6455 3.6455 0 0 1 5.1497-5.1478l2.397-2.3989a7.033 7.033 0 0 0-4.8877-1.9297zM7.07 4.9855a7.033 7.033 0 0 0-4.8878 1.9316l2.3911 2.3911a3.6434 3.6434 0 0 1 5.0227.1271l1.7341-2.9737-.0997-.0802A7.033 7.033 0 0 0 7.07 4.9855zm15.0093 2.1721l-2.3892 2.3911a3.6455 3.6455 0 0 1-5.1497 5.1497l-2.4067 2.4068a7.0362 7.0362 0 0 0 9.9456-9.9476zM1.932 7.1674a7.033 7.033 0 0 0-.002 9.6816l2.397-2.397a3.6434 3.6434 0 0 1-.004-4.8916zm7.664 7.4235c-1.38 1.3816-3.5863 1.411-5.0168.1134l-2.397 2.395c2.4693 2.3328 6.263 2.5753 9.0072.5455l.1368-.1115z"/>
+            </svg>
+          </span>
+          <span class="ide-name">Colab</span>
+          <span class="ide-arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Columna derecha: Texto principal -->
+    <div class="sec-b-content">
+      <p class="label rv-i">01 · Entorno</p>
+      <h3 class="sub-head rv-i t2">Dónde desarrollar</h3>
+      <p class="lead rv-i t3">Edita los archivos en tu IDE habitual. El volumen Docker <code>./app:/app</code> sincroniza en caliente al guardar sin necesidad de reiniciar el contenedor.</p>
+    </div>
+  </div>
+</section>
+
+<section class="eur-sec sec-c" id="sec-c">
+  <p class="label rv-i">02 · Stack</p>
+  <h3 class="sub-head rv-i t2">Librerías disponibles</h3>
+  <ul class="libs">
+    <li class="rv-i">
+      <span class="lib-name">mediapipe</span>
+      <div class="lib-actions">
+        <button class="lib-cmd-btn" data-act="copy" data-cmd="pip install mediapipe" aria-label="Copiar comando pip install mediapipe">
+          <code>pip install mediapipe</code>
+          <span class="lib-status">Copiar</span>
+        </button>
+        <a class="lib-pypi-link" href="https://pypi.org/project/mediapipe/" target="_blank" rel="noopener noreferrer" aria-label="Ver mediapipe en PyPI">
+          <span>PyPI</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg>
+        </a>
+      </div>
+    </li>
+    <li class="rv-i">
+      <span class="lib-name">opencv</span>
+      <div class="lib-actions">
+        <button class="lib-cmd-btn" data-act="copy" data-cmd="pip install opencv-python" aria-label="Copiar comando pip install opencv-python">
+          <code>pip install opencv-python</code>
+          <span class="lib-status">Copiar</span>
+        </button>
+        <a class="lib-pypi-link" href="https://pypi.org/project/opencv-python/" target="_blank" rel="noopener noreferrer" aria-label="Ver opencv-python en PyPI">
+          <span>PyPI</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg>
+        </a>
+      </div>
+    </li>
+    <li class="rv-i">
+      <span class="lib-name">numpy</span>
+      <div class="lib-actions">
+        <button class="lib-cmd-btn" data-act="copy" data-cmd="pip install numpy" aria-label="Copiar comando pip install numpy">
+          <code>pip install numpy</code>
+          <span class="lib-status">Copiar</span>
+        </button>
+        <a class="lib-pypi-link" href="https://pypi.org/project/numpy/" target="_blank" rel="noopener noreferrer" aria-label="Ver numpy en PyPI">
+          <span>PyPI</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg>
+        </a>
+      </div>
+    </li>
+    <li class="rv-i">
+      <span class="lib-name">streamlit</span>
+      <div class="lib-actions">
+        <button class="lib-cmd-btn" data-act="copy" data-cmd="pip install streamlit" aria-label="Copiar comando pip install streamlit">
+          <code>pip install streamlit</code>
+          <span class="lib-status">Copiar</span>
+        </button>
+        <a class="lib-pypi-link" href="https://pypi.org/project/streamlit/" target="_blank" rel="noopener noreferrer" aria-label="Ver streamlit en PyPI">
+          <span>PyPI</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg>
+        </a>
+      </div>
+    </li>
+    <li class="rv-i">
+      <span class="lib-name">streamlit-webrtc</span>
+      <div class="lib-actions">
+        <button class="lib-cmd-btn" data-act="copy" data-cmd="pip install streamlit-webrtc" aria-label="Copiar comando pip install streamlit-webrtc">
+          <code>pip install streamlit-webrtc</code>
+          <span class="lib-status">Copiar</span>
+        </button>
+        <a class="lib-pypi-link" href="https://pypi.org/project/streamlit-webrtc/" target="_blank" rel="noopener noreferrer" aria-label="Ver streamlit-webrtc en PyPI">
+          <span>PyPI</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12L12 4M5 4h7v7"/></svg>
+        </a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="stack-guide rv-i t3">
+    <div class="stack-downloads">
+      <span class="stack-dl-label">Descarga directa sin salir:</span>
+      <div class="stack-dl-btns">
+        <a class="stack-btn" href="data:text/plain;charset=utf-8,streamlit%3D%3D1.32.0%0Astreamlit-webrtc%3D%3D0.47.0%0Aopencv-python-headless%3D%3D4.9.0.80%0Amediapipe%3D%3D0.10.9%0Aprotobuf%3D%3D3.20.3%0Anumpy%0Aav%0A" download="requirements.txt">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v9M4 8l4 4 4-4M2 14h12"/></svg>
+          <span>requirements.txt</span>
+        </a>
+        <a class="stack-btn" href="data:text/plain;charset=utf-8,%23!%2Fbin%2Fbash%0A%23%20Instalacion%20del%20stack%20EURICHALLENGE%0Apip%20install%20streamlit%3D%3D1.32.0%20streamlit-webrtc%3D%3D0.47.0%20opencv-python-headless%3D%3D4.9.0.80%20mediapipe%3D%3D0.10.9%20protobuf%3D%3D3.20.3%20numpy%20av%0A" download="instalar_stack.sh">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v9M4 8l4 4 4-4M2 14h12"/></svg>
+          <span>instalar_stack.sh</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="stack-notes">
+      <div class="stack-note">
+        <span class="note-tag">Docker</span>
+        <p>Todas estas librerías ya están preinstaladas dentro de la imagen del contenedor. Si ejecutas la aplicación con Docker no requieres instalar nada.</p>
+      </div>
+      <div class="stack-note">
+        <span class="note-tag">Entorno local</span>
+        <p>Las librerías de Python no se copian manualmente a carpetas: se instalan en el entorno con pip. Descarga los requisitos o ejecuta en tu terminal: <code>pip install -r requirements.txt</code></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="eur-sec sec-d" id="sec-d">
+  <p class="label rv-i">03 · Código</p>
+  <h3 class="sub-head rv-i t2">Estructura del proyecto y permisos</h3>
+
+  <div class="tree-container rv-i t2">
+    <!-- Nodo raiz -->
+    <div class="tree-root">
+      <span class="tree-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3a1 1 0 011-1h3l2 2h5a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V3z"/></svg>
+      </span>
+      <span class="tree-root-name">EURICHALLENGE /</span>
+      <span class="tree-root-tag">Directorio raíz</span>
+    </div>
+
+    <!-- Rama app/ -->
+    <div class="tree-branch-group">
+      <div class="branch-header rv-i t2">
+        <span class="branch-tick"></span>
+        <span class="branch-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3a1 1 0 011-1h3l2 2h5a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V3z"/></svg>
+        </span>
+        <span class="branch-title">app /</span>
+        <span class="branch-tag">Directorio principal de trabajo</span>
+      </div>
+
+      <div class="leaf-items">
+        <!-- app.py -->
+        <article class="leaf-card modifiable rv-i t3">
+          <span class="branch-subtick"></span>
+          <div class="leaf-head">
+            <div class="leaf-main">
+              <span class="leaf-name">app.py</span>
+              <span class="leaf-badge modifiable">Editable</span>
+            </div>
+            <span class="leaf-role">Interfaz de usuario y flujo de sesión</span>
+          </div>
+          <div class="leaf-io">
+            <div class="io-col">
+              <span class="io-k">Qué meter (Entradas)</span>
+              <p class="io-v">Controles interactivos de Streamlit, selectores de articulación y ejercicio, configuración de umbrales articulares y alertas en pantalla.</p>
+            </div>
+            <div class="io-col">
+              <span class="io-k">Qué saca (Salidas)</span>
+              <p class="io-v">Panel web en tiempo real, renderizado de gráficos de evolución angular, conteo de repeticiones y feedback visual para el usuario.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- utils.py -->
+        <article class="leaf-card modifiable rv-i t4">
+          <span class="branch-subtick"></span>
+          <div class="leaf-head">
+            <div class="leaf-main">
+              <span class="leaf-name">utils.py</span>
+              <span class="leaf-badge modifiable">Editable</span>
+            </div>
+            <span class="leaf-role">Visión artificial y lógica biomecánica</span>
+          </div>
+          <div class="leaf-io">
+            <div class="io-col">
+              <span class="io-k">Qué meter (Entradas)</span>
+              <p class="io-v">Extracción de landmarks con MediaPipe Pose sobre los frames de vídeo, cálculo trigonométrico de ángulos articulares y detección de transiciones de movimiento.</p>
+            </div>
+            <div class="io-col">
+              <span class="io-k">Qué saca (Salidas)</span>
+              <p class="io-v">Frame de cámara con el esqueleto dibujado y un diccionario estructurado de métricas (ángulos instantáneos, rango de movimiento y estado de la postura).</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- assets/ -->
+        <article class="leaf-card protected rv-i t5">
+          <span class="branch-subtick"></span>
+          <div class="leaf-head">
+            <div class="leaf-main">
+              <span class="leaf-name">assets /</span>
+              <span class="leaf-badge protected">No tocar</span>
+            </div>
+            <span class="leaf-role">Motor estético y recursos del sistema</span>
+          </div>
+
+          <div class="assets-file-list">
+            <div class="asset-file-item">
+              <span class="asset-file-name">estilos.css</span>
+              <span class="leaf-badge protected-mini">No tocar</span>
+              <span class="asset-file-desc">Hoja de estilos global, layout responsive e identidad gráfica del reto.</span>
+            </div>
+            <div class="asset-file-item">
+              <span class="asset-file-name">fondo.glsl</span>
+              <span class="leaf-badge protected-mini">No tocar</span>
+              <span class="asset-file-desc">Shader WebGL de neblina dinámica, oleaje y grano procedural fino.</span>
+            </div>
+            <div class="asset-file-item">
+              <span class="asset-file-name">intro.js</span>
+              <span class="leaf-badge protected-mini">No tocar</span>
+              <span class="asset-file-desc">Controlador de scroll cinemático, render loop y sincronización de WebRTC.</span>
+            </div>
+            <div class="asset-file-item">
+              <span class="asset-file-name">intro.html</span>
+              <span class="leaf-badge protected-mini">No tocar</span>
+              <span class="asset-file-desc">Estructura semántica del tutorial, navegación y paneles interactivos.</span>
+            </div>
+            <div class="asset-file-item">
+              <span class="asset-file-name">sonido.js</span>
+              <span class="leaf-badge protected-mini">No tocar</span>
+              <span class="asset-file-desc">Sintetizador Web Audio API para el efecto acústico de encendido.</span>
+            </div>
+            <div class="asset-file-item">
+              <span class="asset-file-name">eurielec.png / elgato.png</span>
+              <span class="leaf-badge protected-mini">No tocar</span>
+              <span class="asset-file-desc">Logotipos vectorizados e imagen de marca de la organización y patrocinio.</span>
+            </div>
+          </div>
+
+          <div class="leaf-notice">
+            <p class="lock-warn">La estética de la app web no se debe tocar para garantizar la estabilidad del shader WebGL, la sincronización de vídeo y la identidad visual del reto.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Rama archivos de infraestructura raiz -->
+    <div class="tree-branch-group aux-group">
+      <div class="branch-header rv-i t5">
+        <span class="branch-tick"></span>
+        <span class="branch-title">Archivos de infraestructura (raíz)</span>
+      </div>
+
+      <div class="aux-items rv-i t5">
+        <div class="aux-row">
+          <span class="branch-subtick"></span>
+          <span class="aux-name">Dockerfile</span>
+          <span class="leaf-badge protected">No tocar</span>
+          <span class="aux-desc">Contenedor Python 3.11 con compiladores de vídeo y librerías preinstaladas.</span>
+        </div>
+        <div class="aux-row">
+          <span class="branch-subtick"></span>
+          <span class="aux-name">docker-compose.yml</span>
+          <span class="leaf-badge protected">No tocar</span>
+          <span class="aux-desc">Mapeo del volumen <code>./app:/app</code> para sincronización en caliente con el host.</span>
+        </div>
+        <div class="aux-row">
+          <span class="branch-subtick"></span>
+          <span class="aux-name">requirements.txt</span>
+          <span class="leaf-badge info">Sólo lectura</span>
+          <span class="aux-desc">Lista base de dependencias. Añade paquetes aquí únicamente si utilizas librerías adicionales.</span>
+        </div>
+        <div class="aux-row">
+          <span class="branch-subtick"></span>
+          <span class="aux-name">README.md</span>
+          <span class="leaf-badge info">Lectura</span>
+          <span class="aux-desc">Documentación del reto, instrucciones de ejecución e información técnica.</span>
+        </div>
+        <div class="aux-row">
+          <span class="branch-subtick"></span>
+          <span class="aux-name">LICENSE</span>
+          <span class="leaf-badge info">Lectura</span>
+          <span class="aux-desc">Licencia de código abierto del repositorio.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="eur-sec sec-end" id="sec-end">
+  <button class="go rv-i" data-act="tool">
+    <span>Ir a la herramienta</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
+  </button>
+</section>
