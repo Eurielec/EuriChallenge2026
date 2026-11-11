@@ -5,15 +5,16 @@ import time
 import html
 import base64
 import hashlib
+import threading
 import streamlit as st
 import streamlit.components.v1 as components
-import cv2
 import mediapipe as mp
 import av
 from streamlit_webrtc import webrtc_streamer, WebRtcMode
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from utils import obtener_estilos_dibujo, telemetria
+from utils import obtener_estilos_dibujo
+from rehab_engine import RehabEngine
 
 ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
 
@@ -76,24 +77,60 @@ components.html(f"<script>{js_sonido}</script><script>{js_intro}</script>", heig
 
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
-pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 spec_puntos, spec_conexiones = obtener_estilos_dibujo()
+
+if not isinstance(st.session_state.get("rehab_motor"), RehabEngine):
+    st.session_state["rehab_motor"] = RehabEngine()
+    st.session_state["rehab_tiempo"] = {
+        "lock": threading.Lock(),
+        "ultimo_reloj": None,
+        "ultimo_frame_s": None,
+        "acumulado_ms": 0.0,
+    }
+
+motor = st.session_state["rehab_motor"]
+tiempo_ctx = st.session_state["rehab_tiempo"]
+
+
+def _timestamp_ms(frame):
+    ahora = time.monotonic()
+    frame_s = frame.time
+    with tiempo_ctx["lock"]:
+        reloj_prev = tiempo_ctx["ultimo_reloj"]
+        frame_prev = tiempo_ctx["ultimo_frame_s"]
+
+        nueva_sesion = reloj_prev is None or (ahora - reloj_prev > 2.5)
+        if not nueva_sesion and frame_s is not None and frame_prev is not None:
+            if abs((frame_s - frame_prev) - (ahora - reloj_prev)) > 2.0:
+                nueva_sesion = True
+
+        if nueva_sesion:
+            motor.reiniciar()
+            tiempo_ctx["acumulado_ms"] = 0.0
+        else:
+            dt_s = (
+                (frame_s - frame_prev)
+                if (frame_s is not None and frame_prev is not None)
+                else (ahora - reloj_prev)
+            )
+            tiempo_ctx["acumulado_ms"] += max(0.0, dt_s) * 1000.0
+
+        tiempo_ctx["ultimo_reloj"] = ahora
+        tiempo_ctx["ultimo_frame_s"] = frame_s
+        return tiempo_ctx["acumulado_ms"]
 
 
 def procesar_frame(frame):
-    t0 = time.perf_counter()
     img = frame.to_ndarray(format="bgr24")
-    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = pose.process(img_rgb)
-    alto, ancho = img.shape[:2]
-    telemetria.registrar(
-        results.pose_landmarks, ancho, alto, (time.perf_counter() - t0) * 1000
-    )
-    if results.pose_landmarks:
+    t_ms = _timestamp_ms(frame)
+    landmarks = motor.procesar_fotograma(img, t_ms)
+    if landmarks:
         mp_drawing.draw_landmarks(
-            img, results.pose_landmarks,
+            img,
+            landmarks,
             mp_pose.POSE_CONNECTIONS,
-            spec_puntos, spec_conexiones
+            spec_puntos,
+            spec_conexiones,
         )
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
@@ -151,7 +188,7 @@ with col_izq:
     <ol class="live-log" data-k="log"></ol>
   </div>
   <div class="panel-hint">
-    Espacio reservado para el desarrollo biomecánico en app.py y utils.py.
+    Motor lógico desacoplado en rehab_engine.py (evaluación CLI vía eval.py).
   </div>
 </aside></div>""",
         unsafe_allow_html=True,
@@ -177,8 +214,17 @@ def publicar(payload):
     )
 
 
+estaba_activo = st.session_state.get("camara_activa", False)
+st.session_state["camara_activa"] = ctx.state.playing
+if not ctx.state.playing and estaba_activo:
+    motor.reiniciar()
+    with tiempo_ctx["lock"]:
+        tiempo_ctx["ultimo_reloj"] = None
+        tiempo_ctx["ultimo_frame_s"] = None
+        tiempo_ctx["acumulado_ms"] = 0.0
+
 # bucle de telemetria: mientras la camara este encendida empujamos datos al panel
 while ctx.state.playing:
-    publicar(telemetria.instantanea())
+    publicar(motor.instantanea())
     time.sleep(0.3)
 publicar({"live": False})
